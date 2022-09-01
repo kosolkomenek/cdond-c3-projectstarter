@@ -5,18 +5,19 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - run: cd frontend
-      - run: ls
-      - run: npm install
-      - run: npm run build
+      - run: |
+        cd frontend  
+        npm install
+        npm run build
   build-backend:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - run: cd backend
-      - run: npm install
-      - run: npm run build
+      - run: | 
+        cd backend
+        npm install
+        npm run build
 
 workflows:
   default:
