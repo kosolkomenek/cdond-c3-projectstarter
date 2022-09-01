@@ -67,6 +67,9 @@ jobs:
             cd backend
             npm install
             npm audit fix --force
+            npm install --save-dev webpack@5.74.0 
+            npm install --save-dev nestjs/platform-express
+            npm update mkdirp --depth 6 
             npm audit --audit-level=critical
 
 workflows:
