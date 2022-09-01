@@ -113,5 +113,8 @@
     ],
     "testEnvironment": "node",
     "verbose": false
+  },
+  "resolutions": {
+    "minimist": "1.2.6"
   }
 }
