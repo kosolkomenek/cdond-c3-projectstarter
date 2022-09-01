@@ -15,12 +15,27 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+        name: "Say hello"
+        command: "echo Hello, World!"
+  build-frontend:
+    docker:
+      - image: circleci/node:13.8.0
+    step:
+      - run: cd frontend
+      - run: npm install
+      - run: npm run build
+  build-backend:
+    docker:
+      - image: circleci/node:13.8.0
+    step:
+      - run: cd frontend
+      - run: npm install
+      - run: npm run build
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  default:
     jobs:
-      - say-hello
+      - build-frontend
+      - build-backend
