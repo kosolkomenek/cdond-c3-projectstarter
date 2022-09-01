@@ -50,7 +50,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: test-front
+          name: scan-front
           command: |
             cd frontend
             npm install
@@ -62,7 +62,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: test-back
+          name: scan-back
           command: |
             cd backend
             npm install
