@@ -104,8 +104,27 @@ jobs:
               --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - .circleci/ansible/inventory.txt
       - destroy_environment
-
+  configure_infrastructure:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["98:cf:3c:aa:da:01:51:57:69:c7:e6:9b:48:58:db:42"]
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible
+      - run: cd .circleci/ansible
+      - run:
+          name: Configure server
+          command: |
+            ansible-playbook -i inventory.txt configure-server.yml
 workflows:
   default:
     jobs:
