@@ -140,3 +140,5 @@ workflows:
           requires: [test-backend]
       - deploy-infrastructure:
           requires: [scan-backend, scan-frontend]
+      - configure_infrastructure:
+          requires: [deploy-infrastructure]
