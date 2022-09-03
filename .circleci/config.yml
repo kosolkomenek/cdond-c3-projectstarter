@@ -112,7 +112,7 @@ jobs:
               --filters "Name=tag:Project,Values=udapeople" \
               --output text >> .circleci/ansible/inventory.txt
       - run: ls
-      - run: ~/
+      - run: cd ~/
       - run: ls
       - persist_to_workspace:
           root: ~/
