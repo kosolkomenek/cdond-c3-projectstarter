@@ -115,9 +115,9 @@ jobs:
       - run: cd ~/
       - run: ls
       - persist_to_workspace:
-          root: ~/.circleci/ansible/
+          root: workspace
           paths:
-            - inventory.txt
+            - ~/.circleci/ansible/inventory.txt
       - destroy_environment
   configure_infrastructure:
     docker:
