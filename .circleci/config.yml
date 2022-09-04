@@ -202,7 +202,7 @@ workflows:
       # requires: [scan-backend, scan-frontend]
       - configure_infrastructure:
           requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure_infrastructure]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
+      - run-migrations:
+          requires: [configure_infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
