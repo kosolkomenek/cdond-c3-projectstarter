@@ -175,7 +175,7 @@ jobs:
           command: |
             apk add --update ansible
       - attach_workspace:
-        at: /root/project
+          at: /root/project
       - run:
           name: prepare
           command: |
