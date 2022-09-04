@@ -127,10 +127,13 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update ansible
-      - run: cd .circleci/ansible
+      - attach_workspace:
+          at: /root/project
       - run:
           name: Configure server
           command: |
+            cd .circleci/ansible /
+            cat inventory.txt /
             ansible-playbook -i inventory.txt configure-server.yml
 workflows:
   default:
