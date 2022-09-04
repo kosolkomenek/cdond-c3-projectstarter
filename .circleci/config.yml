@@ -138,7 +138,7 @@ jobs:
       - destroy_environment
   deploy-frontend:
     docker:
-      - image: doctrine/nodejs-aws-cli
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run: yum install -y tar gzip
@@ -153,6 +153,8 @@ jobs:
             echo "API_URL = ${API_URL}" 
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env 
             cat frontend/.env
+      - run: curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+      - run: yum install nodejs
       - run:
           name: deploy frontend
           command: |
