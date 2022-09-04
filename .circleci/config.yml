@@ -200,9 +200,9 @@ workflows:
       #     requires: [test-backend]
       - deploy-infrastructure
         # requires: [scan-backend, scan-frontend]
-      - configure_infrastructure:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure_infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
+      # - configure_infrastructure:
+      #     requires: [deploy-infrastructure]
+      # - run-migrations:
+      #     requires: [configure_infrastructure]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
