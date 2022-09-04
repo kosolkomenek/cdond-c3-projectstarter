@@ -114,7 +114,7 @@ jobs:
       - persist_to_workspace:
           root: /root/project
           paths:
-            - .circleci/ansible/inventory.txt
+            - .circleci/ansible
       - destroy_environment
   configure_infrastructure:
     docker:
@@ -133,7 +133,6 @@ jobs:
           name: Configure server
           command: |
             cd .circleci/ansible /
-            cat inventory.txt /
             ansible-playbook -i inventory.txt configure-server.yml
 workflows:
   default:
