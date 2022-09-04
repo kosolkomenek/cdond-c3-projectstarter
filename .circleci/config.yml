@@ -153,8 +153,8 @@ jobs:
             echo "API_URL = ${API_URL}" 
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env 
             cat frontend/.env
-      - run: curl -sL https://rpm.nodesource.com/setup_10.x  bash -
       - run: yum install nodejs npm --enablerepo=epel
+      - run:
           name: deploy frontend
           command: |
             cd frontend 
