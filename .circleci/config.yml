@@ -138,7 +138,7 @@ jobs:
       - destroy_environment
   deploy-frontend:
     docker:
-      - image: amazon/aws-cli
+      - image: sleavely/node-awscli:14.x
     steps:
       - checkout
       - run: yum install -y tar gzip
