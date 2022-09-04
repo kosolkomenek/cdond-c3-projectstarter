@@ -166,6 +166,8 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
+      - attach_workspace:
+          at: /root/project
       - checkout
       - add_ssh_keys:
           fingerprints:
@@ -174,8 +176,6 @@ jobs:
           name: Install dependencies
           command: |
             sudo apt install ansible
-      - attach_workspace:
-          at: /root/project
       - run:
           name: prepare
           command: |
