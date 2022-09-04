@@ -153,7 +153,7 @@ jobs:
             echo "API_URL = ${API_URL}" 
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env 
             cat frontend/.env
-      - run: amazon-linux-extras install epel
+      - run: sudo amazon-linux-extras install epel
       - run: yum install nodejs npm
       - run:
           name: deploy frontend
