@@ -153,7 +153,6 @@ jobs:
             echo "API_URL = ${API_URL}" 
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env 
             cat frontend/.env
-      - run: apt install nodejs npm
       - run:
           name: deploy frontend
           command: |
