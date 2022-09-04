@@ -111,9 +111,8 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:Project,Values=udapeople" \
               --output text >> .circleci/ansible/inventory.txt
-      - run: pwd
       - persist_to_workspace:
-          root: ~/
+          root: /root/project
           paths:
             - .circleci/ansible/inventory.txt
       - destroy_environment
