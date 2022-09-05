@@ -116,6 +116,7 @@ jobs:
               --output text >> ip.txt
       - run: cat ip.txt >> .circleci/ansible/inventory
       - run: cat .circleci/ansible/inventory.txt
+      - run: cat ip.txt
       - persist_to_workspace:
           root: .
           paths: ip.txt
@@ -129,6 +130,8 @@ jobs:
       - attach_workspace:
           at: tmp
       - run: ls
+      - run: ls tmp
+      - run: cat tmp/ip.txt
       - run: cat tmp/ip.txt >> .circleci/ansible/inventory
       - run: cat .circleci/ansible/inventory.txt
       # - add_ssh_keys:
