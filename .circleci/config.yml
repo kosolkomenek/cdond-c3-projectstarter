@@ -221,7 +221,7 @@ jobs:
     steps:
       - run: apk add --update curl
       - attach_workspace:
-        at: tmp
+          at: tmp
       - run:
           name: smoke test
           command: |
