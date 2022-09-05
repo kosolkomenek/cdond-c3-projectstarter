@@ -121,6 +121,7 @@ jobs:
           root: tmp
           paths: ip.txt
       - destroy_environment
+
   configure_infrastructure:
     docker:
       - image: python:3.7-alpine3.11
@@ -261,4 +262,4 @@ workflows:
       - deploy-backend:
           requires: [run-migrations]
       - backend-smoke-test:
-        requires: [deploy-backend]
+         requires: [deploy-backend]
