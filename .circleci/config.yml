@@ -118,8 +118,8 @@ jobs:
       - run: cat tmp/ip.txt >> .circleci/ansible/inventory
       - run: cat .circleci/ansible/inventory.txt
       - persist_to_workspace:
-          root: tmp
-          paths: ip.txt
+          root: .
+          paths: tmp
       - destroy_environment
 
   configure_infrastructure:
@@ -143,9 +143,6 @@ jobs:
           command: |
             cd .circleci/ansible /
             ansible-playbook -i inventory.txt configure-server.yml
-      - persist_to_workspace:
-          root: tmp
-          paths: ip.txt
       - destroy_environment
   run-migrations:
     docker:
@@ -226,8 +223,6 @@ jobs:
       - image: alpine:latest
     steps:
       - run: apk add --update curl
-      - attach_workspace:
-          at: tmp
       - run:
           name: smoke test
           command: |
@@ -286,3 +281,5 @@ workflows:
           requires: [run-migrations]
       - backend-smoke-test:
           requires: [deploy-backend]
+      - frontend-smoke-test:
+          requires: [deploy-frontend]
