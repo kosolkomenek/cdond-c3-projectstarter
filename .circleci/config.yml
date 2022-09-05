@@ -119,7 +119,7 @@ jobs:
       - run: cat .circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: tmp
-          paths: *
+          paths: /*
       - run: chmod 777 tmp
       - run: cat tmp/ip.txt
       - destroy_environment
