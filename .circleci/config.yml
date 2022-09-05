@@ -106,20 +106,19 @@ jobs:
       #         --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
       #         --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
       #         --tags project=udapeople
-      - run: mkdir tmp
-      - run: touch tmp/ip.txt
+      - run: touch ip.txt
       - run:
           name: get Public IP
           command: |
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udapeople" \
-              --output text >> tmp/ip.txt
+              --output text >> ip.txt
       - run: cat tmp/ip.txt >> .circleci/ansible/inventory
       - run: cat .circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: .
-          paths: tmp/*
+          paths: ip.txt
       - run: chmod 777 tmp
       - run: cat tmp/ip.txt
       - destroy_environment
@@ -132,22 +131,21 @@ jobs:
       - attach_workspace:
           at: tmp
       - run: ls
-      - run: ls tmp/tmp
       - run: cat tmp/ip.txt >> .circleci/ansible/inventory
       - run: cat .circleci/ansible/inventory.txt
-      - add_ssh_keys:
-          fingerprints:
-            - "98:cf:3c:aa:da:01:51:57:69:c7:e6:9b:48:58:db:42"
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --update ansible
-      - run:
-          name: Configure server
-          command: |
-            cd .circleci/ansible /
-            ansible-playbook -i inventory.txt configure-server.yml
-      - destroy_environment
+      # - add_ssh_keys:
+      #     fingerprints:
+      #       - "98:cf:3c:aa:da:01:51:57:69:c7:e6:9b:48:58:db:42"
+      # - run:
+      #     name: Install dependencies
+      #     command: |
+      #       apk add --update ansible
+      # - run:
+      #     name: Configure server
+      #     command: |
+      #       cd .circleci/ansible /
+      #       ansible-playbook -i inventory.txt configure-server.yml
+      # - destroy_environment
   run-migrations:
     docker:
       - image: circleci/node:13.8.0
@@ -275,13 +273,13 @@ workflows:
       # requires: [scan-backend, scan-frontend]
       - configure_infrastructure:
           requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure_infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
-      - backend-smoke-test:
-          requires: [deploy-backend]
-      - frontend-smoke-test:
-          requires: [deploy-frontend]
+      # - run-migrations:
+      #     requires: [configure_infrastructure]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [run-migrations]
+      # - backend-smoke-test:
+      #     requires: [deploy-backend]
+      # - frontend-smoke-test:
+      #     requires: [deploy-frontend]
