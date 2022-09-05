@@ -143,6 +143,9 @@ jobs:
           command: |
             cd .circleci/ansible /
             ansible-playbook -i inventory.txt configure-server.yml
+      - persist_to_workspace:
+          root: tmp
+          paths: ip.txt
       - destroy_environment
   run-migrations:
     docker:
@@ -197,6 +200,7 @@ jobs:
       - attach_workspace:
           at: tmp
       - run: cat tmp/ip.txt >> .circleci/ansible/inventory
+      - run: cat .circleci/ansible/inventory.txt
       - add_ssh_keys:
           fingerprints:
             - "98:cf:3c:aa:da:01:51:57:69:c7:e6:9b:48:58:db:42"
@@ -204,7 +208,6 @@ jobs:
           name: Install dependencies
           command: |
             sudo apt install ansible
-      - run: cat .circleci/ansible/inventory.txt
       - run:
           name: prepare
           command: |
@@ -282,4 +285,4 @@ workflows:
       - deploy-backend:
           requires: [run-migrations]
       - backend-smoke-test:
-         requires: [deploy-backend]
+          requires: [deploy-backend]
