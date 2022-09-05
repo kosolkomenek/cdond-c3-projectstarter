@@ -114,7 +114,7 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udapeople" \
               --output text >> ip.txt
-      - run: cat ip.txt >> .circleci/ansible/inventory
+      - run: cat ip.txt >> .circleci/ansible/inventory.txt
       - run: cat .circleci/ansible/inventory.txt
       - run: cat ip.txt
       - persist_to_workspace:
@@ -132,7 +132,7 @@ jobs:
       - run: ls
       - run: ls tmp
       - run: cat tmp/ip.txt
-      - run: cat tmp/ip.txt >> .circleci/ansible/inventory
+      - run: cat tmp/ip.txt >> .circleci/ansible/inventory.txt
       - run: cat .circleci/ansible/inventory.txt
       # - add_ssh_keys:
       #     fingerprints:
