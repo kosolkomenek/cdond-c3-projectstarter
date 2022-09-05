@@ -112,11 +112,6 @@ jobs:
               --filters "Name=tag:project,Values=udapeople" \
               --output text >> .circleci/ansible/inventory.txt
       - run: cat .circleci/ansible/inventory.txt
-      - run: mkdir /tmp -m chmod777
-      - persist_to_workspace:
-          root: /tmp/project
-          paths:
-            - /root/project
       - destroy_environment
   run-migrations:
     docker:
@@ -167,8 +162,6 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - attach_workspace:
-          at: /tmp/project
       - checkout
       - add_ssh_keys:
           fingerprints:
@@ -177,6 +170,14 @@ jobs:
           name: Install dependencies
           command: |
             sudo apt install ansible
+      - run:
+          name: get Public IP
+          command: |
+            aws ec2 describe-instances \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --filters "Name=tag:project,Values=udapeople" \
+              --output text >> .circleci/ansible/inventory.txt
+      - run: cat .circleci/ansible/inventory.txt
       - run:
           name: prepare
           command: |
@@ -194,8 +195,15 @@ jobs:
     docker:
       - image: python:3.7-alpine3.11
     steps:
-      - attach_workspace:
-          at: /tmp/project
+      - checkout
+      - run:
+          name: get Public IP
+          command: |
+            aws ec2 describe-instances \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --filters "Name=tag:project,Values=udapeople" \
+              --output text >> .circleci/ansible/inventory.txt
+      - run: cat .circleci/ansible/inventory.txt
       - add_ssh_keys:
           fingerprints:
             - "98:cf:3c:aa:da:01:51:57:69:c7:e6:9b:48:58:db:42"
