@@ -132,7 +132,7 @@ jobs:
       - attach_workspace:
           at: tmp
       - run: ls
-      - run: ls tmp
+      - run: ls tmp/tmp
       - run: cat tmp/ip.txt >> .circleci/ansible/inventory
       - run: cat .circleci/ansible/inventory.txt
       - add_ssh_keys:
