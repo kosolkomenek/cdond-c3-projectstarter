@@ -121,7 +121,7 @@ jobs:
           root: .
           paths: tmp
       - run: chmod 777 tmp
-      - run: cat tmp/tp.txt
+      - run: cat tmp/ip.txt
       - destroy_environment
 
   configure_infrastructure:
