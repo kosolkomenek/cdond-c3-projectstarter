@@ -237,6 +237,26 @@ jobs:
               return 1
             fi
       - destroy_environment
+  frontend-smoke-test:
+    docker:
+      - image: alpine:latest
+    steps:
+      - run: apk add --update curl
+      - attach_workspace:
+          at: tmp
+      - run:
+          name: smoke test
+          command: |
+            BACKEND_IP=$(cat tmp/ip.txt)
+            export API_URL="http://${BACKEND_IP}:3030"
+            echo "${API_URL}"
+            if curl "${API_URL}/api/status" | grep "ok"
+            then
+              return 0
+            else
+              return 1
+            fi
+      - destroy_environment
 workflows:
   default:
     jobs:
