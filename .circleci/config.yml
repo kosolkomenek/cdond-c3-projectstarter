@@ -112,10 +112,11 @@ jobs:
               --filters "Name=tag:project,Values=udapeople" \
               --output text >> .circleci/ansible/inventory.txt
       - run: cat .circleci/ansible/inventory.txt
+      - run: mkdir /tmp -m chmod777
       - persist_to_workspace:
-          root: /root/project
+          root: /tmp/project
           paths:
-            - .circleci/ansible
+            - /root/project
       - destroy_environment
   run-migrations:
     docker:
@@ -167,7 +168,7 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - attach_workspace:
-          at: /root/project
+          at: /tmp/project
       - checkout
       - add_ssh_keys:
           fingerprints:
@@ -193,7 +194,8 @@ jobs:
     docker:
       - image: python:3.7-alpine3.11
     steps:
-      - checkout
+      - attach_workspace:
+          at: /tmp/project
       - add_ssh_keys:
           fingerprints:
             - "98:cf:3c:aa:da:01:51:57:69:c7:e6:9b:48:58:db:42"
@@ -201,8 +203,6 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update ansible
-      - attach_workspace:
-          at: /root/project
       - run:
           name: Configure server
           command: |
