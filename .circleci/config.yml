@@ -120,6 +120,8 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: tmp
+      - run: chmod 777 tmp
+      - run: cat tmp/tp.txt
       - destroy_environment
 
   configure_infrastructure:
@@ -241,8 +243,6 @@ jobs:
       - image: alpine:latest
     steps:
       - run: apk add --update curl
-      - attach_workspace:
-          at: tmp
       - run:
           name: smoke test
           command: |
